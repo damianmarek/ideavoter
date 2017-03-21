@@ -5,7 +5,7 @@ const { Types, Creators } = createActions({
   addIdea: []
 })
 
-export const IdeaTypes = Types
+export const IdeasTypes = Types
 export default Creators
 
 export const INITIAL_STATE = Immutable({
