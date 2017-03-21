@@ -4,7 +4,7 @@ import rootSaga from '../saga'
 
 export default () => {
   const rootReducer = combineReducers({
-    idea: require('./ideasRedux').reducer
+    ideas: require('./ideasRedux').reducer
   })
 
   return configureStore(rootReducer, rootSaga)

@@ -9,7 +9,7 @@ export const IdeasTypes = Types
 export default Creators
 
 export const INITIAL_STATE = Immutable({
-  ideas: []
+  list: []
 })
 
 export const addIdea = (state, action) => state
