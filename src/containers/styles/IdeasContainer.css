@@ -1,0 +1,9 @@
+.container {
+  display: inline-flex;
+  flex-direction: column;
+  flex: 0;
+}
+
+.container > * {
+  margin: 0.3rem 0;
+}
