@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+- '6'
+deploy:
+  provider: heroku
+  api_key:
+    secure: S/CvEbvf88nqdRB1on3+C9CL5ahQuztuwg+bwbVDQ8frqSWsX2cO8nT0/VnPJ/y4y95B3DjXRcgFJsmmbFkC/csWtMSLHfwmk+4KKdXtMr9OsWZkLIC99N7S9Ax4DOq71W8tA/xAV9CDXCRRQ3Mh+AOPP/7xlYgb0x6EajrnzX1lN8GYbaLLfNGaN6KmyHLB75yrYFr67tlhlmX55vgas27/kQ23jXpGUSQ8LJYaYd12Zves0PCxb4gKJhV+UxotnN2p4TOHYivCxAps4EZgpf7x2tb8I5W+K8DyCtw4yUjZdGbPFoToLXnBz1i4++HzMZzq2sETwrackbAoS7N88e7wFSZr2fVFbncTTKZlxd2/p0OOU9aZZrY0ijVobVhtxsW+ghut3+mmI6y2XSuE4SaSz3YjK2isWbSVXXn+eE5rGJ41l8R27EKVXDSZi+ooU9cOB3D/qWssQ91rVY5iDovZo1X3E5yQXbFIt8uexUMrNDQF0p4B1u9vufUCDHNnYu6tuf9t7p5FFPC+iQOdTB/4u6tL7y0xitilDwH1SR/hkZX6o6++Ferd9o8bAMivAXia+cvtm1Tuy7TGN/+iwR190fgym5p7BwzFaCDPa3tcHa27clxBYDfDnfDHfVi+AFzrq29Eq2/Lc/2M0H+i1ZE1pXtDzCXJVSeh51Tx/8k=
+  app: ideavoter
