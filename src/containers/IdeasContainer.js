@@ -2,11 +2,20 @@ import React from 'react'
 import { connect } from 'react-redux'
 import IdeasActions from '../redux/ideasRedux'
 import './styles/IdeasContainer.css'
+import firebase from 'firebase'
+
+const provider = new firebase.auth.GoogleAuthProvider()
 
 class IdeasContainer extends React.Component {
   render () {
     return (
       <div className='container'>
+        <button onClick={() => {this.handleLogin()}}>
+          Login
+        </button>
+        <button onClick={() => {this.handleLogout()}}>
+          Logout
+        </button>
         <form onSubmit={(e) => {this.onSubmit(e)}}>
           <input ref='input' />
           <button type='submit'>
@@ -36,6 +45,14 @@ class IdeasContainer extends React.Component {
   onSubmit = (e) => {
     this.props.addIdea(this.refs.input.value, Date.now())
     e.preventDefault()
+  }
+
+  handleLogin = () => {
+    firebase.auth().signInWithRedirect(provider)
+  }
+
+  handleLogout = () => {
+    firebase.auth().signOut()
   }
 }
 
