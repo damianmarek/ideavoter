@@ -1,15 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import IdeasActions from '../redux/ideasRedux'
+import LoginActions from '../redux/loginRedux'
 import './styles/IdeasContainer.css'
-import firebase from 'firebase'
-
-const provider = new firebase.auth.GoogleAuthProvider()
 
 class IdeasContainer extends React.Component {
   render () {
     return (
       <div className='container'>
+        {this.getLoginState()}
         <button onClick={() => {this.handleLogin()}}>
           Login
         </button>
@@ -48,25 +47,45 @@ class IdeasContainer extends React.Component {
   }
 
   handleLogin = () => {
-    firebase.auth().signInWithRedirect(provider)
+    this.props.login()
   }
 
   handleLogout = () => {
-    firebase.auth().signOut()
+    this.props.logout()
+  }
+
+  getLoginState = () => {
+    if(this.props.loginState.logged) {
+      return (
+        <text>
+          Logged as {this.props.loginState.name}
+        </text>
+      )
+    } else {
+      return (
+        <text>
+          Login to add and remove ideas
+        </text>
+      )
+    }
+
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    ideas: state.ideas.list
+    ideas: state.ideas.list,
+    loginState: state.login,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addIdea: (text, id) => dispatch(IdeasActions.addIdea(text, id)),
-    removeIdea: (id) => dispatch(IdeasActions.removeIdea(id)),
+    addIdea: (text, id) => dispatch(IdeasActions.addIdeaAttempt(text, id)),
+    removeIdea: (id) => dispatch(IdeasActions.removeIdeaAttempt(id)),
     loadIdeas: () => dispatch(IdeasActions.loadIdeasAttempt()),
+    login: () => dispatch(LoginActions.loginAttempt()),
+    logout: () => dispatch(LoginActions.logoutAttempt()),
   }
 }
 
