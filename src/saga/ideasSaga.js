@@ -27,5 +27,5 @@ export function * watchLoadIdeas() {
 
 function * loadIdeasAttempt() {
   let snapshot = yield firebase.database().ref(`ideas/`).once('value')
-  yield put(IdeasActions.loadIdeasSuccess(Object.values(snapshot.val())))
+  yield put(IdeasActions.loadIdeasSuccess(Object.values(snapshot.val() || {})))
 }
