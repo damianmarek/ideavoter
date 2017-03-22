@@ -29,6 +29,10 @@ class IdeasContainer extends React.Component {
     )
   }
 
+  componentDidMount = () => {
+    this.props.loadIdeas()
+  }
+
   onSubmit = (e) => {
     this.props.addIdea(this.refs.input.value, Date.now())
     e.preventDefault()
@@ -45,6 +49,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addIdea: (text, id) => dispatch(IdeasActions.addIdea(text, id)),
     removeIdea: (id) => dispatch(IdeasActions.removeIdea(id)),
+    loadIdeas: () => dispatch(IdeasActions.loadIdeasAttempt()),
   }
 }
 
