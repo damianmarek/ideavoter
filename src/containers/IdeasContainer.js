@@ -7,25 +7,32 @@ class IdeasContainer extends React.Component {
   render () {
     return (
       <div className='container'>
-        <input ref='input' />
-        <button onClick={() => {this.onButtonClick()}}>
-          Add
-        </button>
+        <form onSubmit={(e) => {this.onSubmit(e)}}>
+          <input ref='input' />
+          <button type='submit'>
+            Add
+          </button>
+        </form>
         {this.props.ideas.map((idea, key) => {
           return (
-            <text key={key}>
-              {idea}
-            </text>
+            <div key={key}>
+              <text>
+                {idea.text}
+              </text>
+              <button type='button' onClick={this.props.removeIdea.bind(this, idea.id)}>
+                Remove
+              </button>
+            </div>
           )
         })}
       </div>
     )
   }
 
-  onButtonClick = () => {
-    this.props.addIdea(this.refs.input.value)
+  onSubmit = (e) => {
+    this.props.addIdea(this.refs.input.value, Date.now())
+    e.preventDefault()
   }
-
 }
 
 const mapStateToProps = (state) => {
@@ -36,7 +43,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addIdea: (text) => dispatch(IdeasActions.addIdea(text))
+    addIdea: (text, id) => dispatch(IdeasActions.addIdea(text, id)),
+    removeIdea: (id) => dispatch(IdeasActions.removeIdea(id)),
   }
 }
 
