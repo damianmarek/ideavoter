@@ -9,5 +9,6 @@ export default function * root() {
     fork(watchLoadIdeas),
     fork(loginSaga.watchLoginAttempt),
     fork(loginSaga.watchLogoutAttempt),
+    fork(loginSaga.listenAuth),
   ]
 }
