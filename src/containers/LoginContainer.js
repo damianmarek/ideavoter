@@ -6,11 +6,14 @@ import { Menu, Button, Header } from 'semantic-ui-react'
 class LoginContainer extends React.Component {
   render () {
     return (
-      <Menu stackable>
+      <Menu stackable widths='8'>
+        <Menu.Item>
+          <Header content='IdeaVoter'/>
+        </Menu.Item>
         <Menu.Item position='right'>
           <Header content={this.manageHeaderContent()}/>
         </Menu.Item>
-        <Menu.Item position='right' >
+        <Menu.Item>
           <Button onClick={() => {this.handleLogin()}}
             content={this.props.loginState.logged ? 'Logout' : 'Login'} />
         </Menu.Item>
@@ -19,7 +22,7 @@ class LoginContainer extends React.Component {
   }
 
   manageHeaderContent = () => {
-    return this.props.loginState.logged ? `Logged as ${this.props.loginState.name}`:`Login to add and remove ideas `
+    return this.props.loginState.logged ? `${this.props.loginState.name}` : `Not logged`
   }
 
   handleLogin = () => {

@@ -9,11 +9,11 @@ class IdeasContainer extends React.Component {
     return (
       <div className='container'>
         <Form onSubmit={(e) => {this.onSubmit(e)}}>
-          <Form.Field>
+          <Form.Field disabled={!this.props.loginState.logged}>
             <label>Create idea</label>
             <input ref='input' placeholder='Content'/>
           </Form.Field>
-          <Button type='submit'>
+          <Button type='submit' disabled={!this.props.loginState.logged}>
             Add
           </Button>
         </Form>
@@ -47,6 +47,7 @@ class IdeasContainer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     ideas: state.ideas.list,
+    loginState: state.login
   }
 }
 

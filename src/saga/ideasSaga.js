@@ -3,20 +3,24 @@ import { takeEvery, put, select, take, call } from 'redux-saga/effects'
 import { eventChannel } from 'redux-saga'
 import firebase from 'firebase'
 
-const selectLogin = (state) => state.login.logged
+const selectLogin = (state) => state.login
 
 export function * watchAddIdea() {
   yield takeEvery(IdeasTypes.ADD_IDEA_ATTEMPT, addIdea)
 }
 
 function * addIdea({ text, id }) {
-  const logged = yield select(selectLogin)
-  if(logged) {
-    yield firebase.database().ref(`ideas/${id}`).set({
-      id,
-      text,
-    })
-  }
+  const loginState = yield select(selectLogin)
+  const { uid } = loginState
+
+  yield firebase.database().ref(`ideas/${id}`).set({
+    id,
+    text,
+    uid,
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 }
 
 export function * watchRemoveIdea() {
@@ -24,10 +28,13 @@ export function * watchRemoveIdea() {
 }
 
 function * removeIdea({ id }) {
-  const logged = yield select(selectLogin)
-  if(logged) {
-    yield firebase.database().ref(`ideas/${id}`).remove()
-  }
+  const loginState = yield select(selectLogin)
+  let snap = yield firebase.database().ref(`ideas/${id}`).once('value')
+  if(snap.val().uid === loginState.uid)
+    yield firebase.database().ref(`ideas/${id}`)
+    .remove().catch((err) => {
+      console.log(err)
+    })
 }
 
 function addIdeaChannel() {

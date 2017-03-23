@@ -38,7 +38,7 @@ export function * listenAuth() {
   while(true) {
     const { user } = yield take(channel);
 
-    if (user)  yield put(LoginActions.loginSuccess(user.displayName, user.email));
+    if (user)  yield put(LoginActions.loginSuccess(user.displayName, user.email, user.uid));
     else yield put(LoginActions.logoutSuccess());
   }
 }
