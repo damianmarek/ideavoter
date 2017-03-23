@@ -6,8 +6,6 @@ const { Types, Creators } = createActions({
   addIdeaSuccess: ['text', 'id'],
   removeIdeaAttempt: ['id'],
   removeIdeaSuccess: ['id'],
-  loadIdeasAttempt: [''],
-  loadIdeasSuccess: ['list'],
 })
 
 export const IdeasTypes = Types
@@ -33,15 +31,9 @@ export const removeIdeaAttempt = (state, action) => state
 export const removeIdeaSuccess = (state, action) =>
   state.setIn(['list'], [...state.list].filter((obj) =>  obj.id !== action.id))
 
-export const loadIdeasAttempt = (state, action) => state
-
-export const loadIdeasSuccess = (state, action) => state.setIn(['list'], action.list)
-
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.ADD_IDEA_ATTEMPT]: addIdeaAttempt,
   [Types.ADD_IDEA_SUCCESS]: addIdeaSuccess,
   [Types.REMOVE_IDEA_ATTEMPT]: removeIdeaAttempt,
   [Types.REMOVE_IDEA_SUCCESS]: removeIdeaSuccess,
-  [Types.LOAD_IDEAS_ATTEMPT]: loadIdeasAttempt,
-  [Types.LOAD_IDEAS_SUCCESS]: loadIdeasSuccess,
 })

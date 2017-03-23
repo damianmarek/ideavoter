@@ -1,12 +1,13 @@
 import { fork } from 'redux-saga/effects'
-import { watchAddIdea, watchRemoveIdea, watchLoadIdeas } from './ideasSaga'
+import * as ideasSaga from './ideasSaga'
 import * as loginSaga from './loginSaga'
 
 export default function * root() {
   yield [
-    fork(watchAddIdea),
-    fork(watchRemoveIdea),
-    fork(watchLoadIdeas),
+    fork(ideasSaga.watchAddIdea),
+    fork(ideasSaga.watchRemoveIdea),
+    fork(ideasSaga.listenAddIdeas),
+    fork(ideasSaga.listenRemoveIdeas),
     fork(loginSaga.watchLoginAttempt),
     fork(loginSaga.watchLogoutAttempt),
     fork(loginSaga.listenAuth),
