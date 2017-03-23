@@ -4,7 +4,10 @@ import { Provider } from 'react-redux'
 import getStore from './redux'
 import App from './App';
 import './index.css';
+import injectTapEventPlugin from 'react-tap-event-plugin'
 import firebase from 'firebase'
+
+injectTapEventPlugin()
 
 const config = {
   apiKey: 'AIzaSyDMjvJzsS__DQUPXnetVFGnHm9x-hjJ89o',
