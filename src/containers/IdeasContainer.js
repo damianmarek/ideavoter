@@ -17,7 +17,11 @@ class IdeasContainer extends React.Component {
             Add
           </Button>
         </Form>
-        {this.props.ideas.map((idea, key) => {
+        {this.props.ideas.asMutable().sort((a, b) => {
+          if(a.id > b.id) return -1
+          else if(a.id < b.id) return 1
+          else return 0
+        }).map((idea, key) => {
           return (
             <Card key={key}>
               <Card.Content>
