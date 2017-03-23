@@ -2,27 +2,34 @@ import React from 'react'
 import { connect } from 'react-redux'
 import IdeasActions from '../redux/ideasRedux'
 import './styles/IdeasContainer.css'
+import { Form, Button, Card } from 'semantic-ui-react'
 
 class IdeasContainer extends React.Component {
   render () {
     return (
       <div className='container'>
-        <form onSubmit={(e) => {this.onSubmit(e)}}>
-          <input ref='input' />
-          <button type='submit'>
+        <Form onSubmit={(e) => {this.onSubmit(e)}}>
+          <Form.Field>
+            <label>Create idea</label>
+            <input ref='input' placeholder='Content'/>
+          </Form.Field>
+          <Button type='submit'>
             Add
-          </button>
-        </form>
+          </Button>
+        </Form>
         {this.props.ideas.map((idea, key) => {
           return (
-            <div key={key}>
-              <text>
+            <Card key={key}>
+              <Card.Content>
                 {idea.text}
-              </text>
-              <button type='button' onClick={this.props.removeIdea.bind(this, idea.id)}>
+              </Card.Content>
+              <Card.Description>
+                {new Date(idea.id).toLocaleString('en-GB', {hour: '2-digit', minute: '2-digit'})}
+              </Card.Description>
+              <Button compact onClick={this.props.removeIdea.bind(this, idea.id)}>
                 Remove
-              </button>
-            </div>
+              </Button>
+            </Card>
           )
         })}
       </div>
@@ -35,6 +42,7 @@ class IdeasContainer extends React.Component {
 
   onSubmit = (e) => {
     this.props.addIdea(this.refs.input.value, Date.now())
+    e.stopPropagation()
     e.preventDefault()
   }
 
