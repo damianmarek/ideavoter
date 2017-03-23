@@ -10,7 +10,7 @@ export function * watchLoginAttempt() {
 
 function * login() {
   let result = yield firebase.auth().signInWithPopup(provider)
-  console.log(result)
+  //console.log(result)
   if(result.user) yield put(LoginActions.loginSuccess(result.user.displayName, result.user.email))
 }
 
