@@ -18,8 +18,8 @@ class IdeasContainer extends React.Component {
           </Button>
         </Form>
         {this.props.ideas.asMutable().sort((a, b) => {
-          if(a.id > b.id) return -1
-          else if(a.id < b.id) return 1
+          if(a.timestamp > b.timestamp) return -1
+          else if(a.timestamp < b.timestamp) return 1
           else return 0
         }).map((idea, key) => {
           return (
@@ -28,9 +28,9 @@ class IdeasContainer extends React.Component {
                 {idea.text}
               </Card.Content>
               <Card.Description>
-                {new Date(idea.id).toLocaleString('en-GB', {hour: '2-digit', minute: '2-digit'})}
+                {new Date(idea.timestamp).toLocaleString('en-GB', {hour: '2-digit', minute: '2-digit'})}
               </Card.Description>
-              <Button compact onClick={this.props.removeIdea.bind(this, idea.id)}>
+              <Button compact onClick={this.props.removeIdea.bind(this, idea.key)}>
                 Remove
               </Button>
             </Card>
@@ -57,8 +57,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addIdea: (text, id) => dispatch(IdeasActions.addIdeaAttempt(text, id)),
-    removeIdea: (id) => dispatch(IdeasActions.removeIdeaAttempt(id)),
+    addIdea: (text, timestamp) => dispatch(IdeasActions.addIdeaAttempt(text, timestamp)),
+    removeIdea: (key) => dispatch(IdeasActions.removeIdeaAttempt(key)),
   }
 }
 

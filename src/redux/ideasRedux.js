@@ -2,10 +2,10 @@ import { createActions, createReducer } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
-  addIdeaAttempt: ['text', 'id'],
-  addIdeaSuccess: ['text', 'id'],
-  removeIdeaAttempt: ['id'],
-  removeIdeaSuccess: ['id'],
+  addIdeaAttempt: ['text', 'timestamp'],
+  addIdeaSuccess: ['text', 'timestamp', 'key'],
+  removeIdeaAttempt: ['key'],
+  removeIdeaSuccess: ['key'],
 })
 
 export const IdeasTypes = Types
@@ -22,14 +22,15 @@ export const addIdeaSuccess = (state, action) =>
     [...state.list,
     {
       text: action.text,
-      id: action.id
+      timestamp: action.timestamp,
+      key: action.key,
     }
   ])
 
 export const removeIdeaAttempt = (state, action) => state
 
 export const removeIdeaSuccess = (state, action) =>
-  state.setIn(['list'], [...state.list].filter((obj) =>  obj.id !== action.id))
+  state.setIn(['list'], [...state.list].filter((obj) =>  obj.key !== action.key))
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.ADD_IDEA_ATTEMPT]: addIdeaAttempt,
