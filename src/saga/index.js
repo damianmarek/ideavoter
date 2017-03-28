@@ -6,8 +6,14 @@ export default function * root() {
   yield [
     fork(ideasSaga.watchAddIdea),
     fork(ideasSaga.watchRemoveIdea),
+
     fork(ideasSaga.listenAddIdeas),
     fork(ideasSaga.listenRemoveIdeas),
+    
+    fork(ideasSaga.watchLoadLikes),
+
+    fork(ideasSaga.watchLikeIdea),
+
     fork(loginSaga.watchLoginAttempt),
     fork(loginSaga.watchLogoutAttempt),
     fork(loginSaga.listenAuth),

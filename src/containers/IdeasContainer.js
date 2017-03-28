@@ -43,9 +43,15 @@ class IdeasContainer extends React.Component {
           <Card.Description>
             {new Date(idea.timestamp).toLocaleString('en-GB', {hour: '2-digit', minute: '2-digit'})}
           </Card.Description>
-            <Button compact onClick={this.props.removeIdea.bind(this, idea._key)}>
-              Remove
-            </Button>
+          <Card.Meta>
+            {this.props.ideas[idea._key].likes}
+          </Card.Meta>
+          <Button compact onClick={this.props.like.bind(this, idea._key)}>
+            Like
+          </Button>
+          <Button compact onClick={this.props.removeIdea.bind(this, idea._key)}>
+            Remove
+          </Button>
         </Card>
       )
     })
@@ -55,6 +61,11 @@ class IdeasContainer extends React.Component {
     this.props.addIdea(this.refs.input.value, Date.now())
     e.stopPropagation()
     e.preventDefault()
+  }
+
+  componentDidMount = () => {
+    // Load likes on component mount
+    this.props.loadLikes()
   }
 
 }
@@ -70,6 +81,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addIdea: (text, timestamp) => dispatch(IdeasActions.addIdeaAttempt(text, timestamp)),
     removeIdea: (key) => dispatch(IdeasActions.removeIdeaAttempt(key)),
+    like: (key) => dispatch(IdeasActions.likeIdeaAttempt(key)),
+    loadLikes: () => dispatch(IdeasActions.loadLikes()),
   }
 }
 

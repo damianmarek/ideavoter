@@ -35,6 +35,43 @@ function * removeIdea({ key }) {
     .remove().catch((err) => {
       console.log(err)
     })
+    yield firebase.database().ref(`likes/${key}`)
+    .remove().catch((err) => {
+      console.log(err)
+    })
+}
+
+export function * watchLikeIdea() {
+  yield takeEvery(IdeasTypes.LIKE_IDEA_ATTEMPT, likeIdea)
+}
+
+function * likeIdea({ key }) {
+  const loginState = yield select(selectLogin)
+  // Check if already liked before sending like to Firebase
+  const likeState = yield firebase.database().ref(`likes/${key}/voters/${loginState.uid}`).once('value')
+  // Send like
+  yield firebase.database().ref(`likes/${key}/voters/${loginState.uid}`).set(true)
+  .catch((err) => {
+    console.log(err)
+  })
+  // Allow to like only once
+  if(likeState.val()) {
+    console.log('Already liked')
+  } else {
+    yield put(IdeasActions.likeIdeaSuccess(key))
+  }
+}
+
+export function * watchLoadLikes() {
+    yield takeEvery(IdeasTypes.LOAD_LIKES, loadLikes)
+}
+
+function * loadLikes() {
+  const snap = yield firebase.database().ref('likes').once('value')
+  for( let el of Object.keys(snap.val())) {
+    const val = Object.keys(snap.val()[el].voters).length
+    yield put(IdeasActions.setIdeaLikes(el, val))
+  }
 }
 
 function addIdeaChannel() {
