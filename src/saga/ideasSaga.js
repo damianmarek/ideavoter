@@ -68,7 +68,7 @@ export function * watchLoadLikes() {
 
 function * loadLikes() {
   const snap = yield firebase.database().ref('likes').once('value')
-  for( let el of Object.keys(snap.val())) {
+  for( let el of Object.keys(snap.val() || {})) {
     const val = Object.keys(snap.val()[el].voters).length
     yield put(IdeasActions.setIdeaLikes(el, val))
   }
