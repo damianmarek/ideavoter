@@ -17,27 +17,38 @@ class IdeasContainer extends React.Component {
             Add
           </Button>
         </Form>
-        {this.props.ideas.asMutable().sort((a, b) => {
-          if(a.timestamp > b.timestamp) return -1
-          else if(a.timestamp < b.timestamp) return 1
-          else return 0
-        }).map((idea, key) => {
-          return (
-            <Card key={key}>
-              <Card.Content>
-                {idea.text}
-              </Card.Content>
-              <Card.Description>
-                {new Date(idea.timestamp).toLocaleString('en-GB', {hour: '2-digit', minute: '2-digit'})}
-              </Card.Description>
-              <Button compact onClick={this.props.removeIdea.bind(this, idea.key)}>
-                Remove
-              </Button>
-            </Card>
-          )
-        })}
+        {this.renderIdeas()}
       </div>
     )
+  }
+
+  renderIdeas = () => {
+    return Object.keys(this.props.ideas)
+    .map((obj, key) => {
+      return {
+        ...this.props.ideas[obj],
+        _key: obj
+      }
+    }).sort((a, b) => {
+      if(a.timestamp > b.timestamp) return -1
+      if(a.timestamp < b.timestamp) return 1
+      else return 0
+    })
+    .map((idea, key) => {
+      return (
+        <Card key={key}>
+          <Card.Content>
+           {idea.text}
+          </Card.Content>
+          <Card.Description>
+            {new Date(idea.timestamp).toLocaleString('en-GB', {hour: '2-digit', minute: '2-digit'})}
+          </Card.Description>
+            <Button compact onClick={this.props.removeIdea.bind(this, idea._key)}>
+              Remove
+            </Button>
+        </Card>
+      )
+    })
   }
 
   onSubmit = (e) => {

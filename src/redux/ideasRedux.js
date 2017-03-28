@@ -1,5 +1,6 @@
 import { createActions, createReducer } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+import R from 'ramda'
 
 const { Types, Creators } = createActions({
   addIdeaAttempt: ['text', 'timestamp'],
@@ -12,25 +13,24 @@ export const IdeasTypes = Types
 export default Creators
 
 export const INITIAL_STATE = Immutable({
-  list: []
+  list: {}
 })
 
 export const addIdeaAttempt = (state, action) => state
 
 export const addIdeaSuccess = (state, action) =>
-  state.setIn(['list'],
-    [...state.list,
+  state.setIn(['list', action.key],
     {
       text: action.text,
       timestamp: action.timestamp,
-      key: action.key,
+      likes: 0,
     }
-  ])
+  )
 
 export const removeIdeaAttempt = (state, action) => state
 
 export const removeIdeaSuccess = (state, action) =>
-  state.setIn(['list'], [...state.list].filter((obj) =>  obj.key !== action.key))
+  state.setIn(['list'], R.omit(action.key, state.list))
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.ADD_IDEA_ATTEMPT]: addIdeaAttempt,
