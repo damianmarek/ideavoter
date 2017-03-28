@@ -7,3 +7,12 @@
 .container > * {
   margin: 0.3rem 0;
 }
+
+.card-buttons-div {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.card-button {
+  min-width: 7rem;
+}
